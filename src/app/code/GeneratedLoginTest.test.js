@@ -1,6 +1,6 @@
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
-import LoginForm from "./LoginForm";
+import LoginForm from "./Components/LoginForm";
 
 describe("LoginForm", () => {
   test("renders login form with username and password input fields and a submit button", () => {
