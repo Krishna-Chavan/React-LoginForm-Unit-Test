@@ -1,20 +1,25 @@
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
-import LoginForm from "../../Components/LoginForm"
+import LoginForm from "../../Components/LoginForm";
 
 describe("LoginForm", () => {
   test("renders login form with username and password input fields and a submit button", () => {
     render(<LoginForm onSubmit={() => {}} />);
     
-    expect(screen.getByLabelText("Username:")).toBeInTheDocument();
-    expect(screen.getByLabelText("Password:")).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: "Login" })).toBeInTheDocument();
+    const usernameInput = screen.getByLabelText("Username:");
+    const passwordInput = screen.getByLabelText("Password:");
+    const submitButton = screen.getByRole("button", { name: "Login" });
+    
+    expect(usernameInput).toBeInTheDocument();
+    expect(passwordInput).toBeInTheDocument();
+    expect(submitButton).toBeInTheDocument();
   });
 
   test("typing into the username input field updates the username state correctly", () => {
     render(<LoginForm onSubmit={() => {}} />);
     
     const usernameInput = screen.getByLabelText("Username:");
+    
     fireEvent.change(usernameInput, { target: { value: "testuser" } });
     
     expect(usernameInput.value).toBe("testuser");
@@ -24,12 +29,13 @@ describe("LoginForm", () => {
     render(<LoginForm onSubmit={() => {}} />);
     
     const passwordInput = screen.getByLabelText("Password:");
+    
     fireEvent.change(passwordInput, { target: { value: "testpassword" } });
     
     expect(passwordInput.value).toBe("testpassword");
   });
 
-  test("calls onSubmit function with correct username and password values when form is submitted", () => {
+  test("when the form is submitted with valid inputs, the onSubmit function is called with the correct username and password values", () => {
     const onSubmitMock = jest.fn();
     render(<LoginForm onSubmit={onSubmitMock} />);
     
